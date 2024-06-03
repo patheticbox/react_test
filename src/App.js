@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import QuestionSelector from './QuestionSelector';
 import Test from './Test';
 
@@ -70,9 +70,21 @@ const testData = {
     }
   ],
 };
+
 const App = () => {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [showResult, setShowResult] = useState(false);
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    console.log("Component did mount or update");
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      console.log("Component mounted");
+    } else {
+      console.log("Component updated");
+    }
+  }, [selectedQuestions, showResult]);
 
   const handleQuestionsSelect = (selectedQuestions) => {
     setSelectedQuestions(selectedQuestions);
